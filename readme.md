@@ -10,6 +10,8 @@ Luego necesitamos crear el archivo descriptor. Debe contener únicamente un dicc
 ~~~
 __manifest__.py:
 ~~~
+
+
 ~~~
 {
     # Creación de aplicaciones en odoo
@@ -24,6 +26,8 @@ Luego necesitamos crear el archivo descriptor. Debe contener únicamente un dicc
 ~~~
 __manifest__.py:
 ~~~
+
+
 ~~~
 {
     'name': 'prue01',
