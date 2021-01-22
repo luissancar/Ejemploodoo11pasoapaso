@@ -19,6 +19,7 @@ carpeta(en Windows):
 C:\Program Files (x86)\Odoo 10\server\odoo\addons  
 Crear  carpeta(nombre aplicacion)  
 Crear fichero 
+
 ~~~
 __init__.py
 ~~~
