@@ -22,7 +22,9 @@ Crear fichero
 ~~~
 __init__.py
 ~~~
+
 Luego necesitamos crear el archivo descriptor. Debe contener únicamente un diccionario Python y puede contener alrededor de una docena de atributos, de los cuales solo el atributo name es obligatorio. Son recomendados los atributos description, para una descripción más larga, y author. Ahora agregamos un archivo 
+
 ~~~
 __manifest__.py:
 ~~~
@@ -37,12 +39,15 @@ __manifest__.py:
     'application': True
 }
 ~~~
+
+
 El atributo depends puede tener una lista de otros módulos requeridos. Odoo los instalará automáticamente cuando este módulo sea instalado.
 
 Los modelos describen los objetos de negocio, como una oportunidad, una orden de venta, o un socio (cliente, proveedor, etc). Un modelo tiene una lista de atributos y también puede definir su negocio específico.
 
 Los modelos son implementados usando clases Python derivadas de una plantilla de clase de Odoo. Estos son traducidos directamente a objetos de base de datos, y Odoo se encarga de esto automáticamente cuando el módulo es instalado o actualizado.
 Creamos la carpeta models y añadimos el fichero datodato.py:
+
 ~~~
 #-*- coding: utf-8 -*-
 from odoo import models, fields, api
@@ -52,6 +57,7 @@ class Dato(models.Model):
     codigo = fields.Integer('Codigo', required=True)
     marca = fields.Char('Marca', required=True)
 ~~~
+
 La primera línea es un marcador especial que le dice al interprete de Python que ese archivo es UTF-8, por lo que puede manejar y esperarse caracteres non-ASCII. No usaremos ninguno, pero es mas seguro usarlo.
 
 La segunda línea hace que estén disponibles los modelos y los objetos campos del núcleo de Odoo.
@@ -60,9 +66,12 @@ la tercera línea declara nuestro nuevo modelo.
 
 Todavía, este archivo, no es usado por el módulo. Debemos decirle a Odoo que lo cargue con el módulo en el archivo __init__.py. Editemos el archivo para agregar la siguiente línea:
 
+~~~
 from . import models
+~~~
 
 En la carpeta models debemos crear un archivo __init__.py , indicando el modelos que debe cargar:
+
 ~~~
 from . import dato
 ~~~
@@ -81,6 +90,7 @@ Si no podemos ver nuestro modelo no podemos pasar al siguiente paso.
 Todo lo que necesitamos hacer es agregar una opción de menú para abrir el modelo  para que pueda ser usado. Esto es realizado usando un archivo XML. Igual que en el caso de los modelos, algunas personas consideran como una buena practica mantener las definiciones de vistas en en un subdirectorio separado.
 
 Crearemos un directorio llamado views y dentro de el un archivo dato.xml,  este tendrá la declaración de un ítem de menú y la interfaz del modelo:
+
 ~~~
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
@@ -121,8 +131,13 @@ Crearemos un directorio llamado views y dentro de el un archivo dato.xml,  este 
     </data>
 </odoo>
 ~~~
+
 La interfaz con el usuario y usuaria, incluidas las opciones del menú y las acciones, son almacenadas en tablas de la base de datos. El archivo XML es un archivo de datos usado para cargar esas definiciones dentro de la base de datos cuando el módulo es instalado o actualizado. Esto es un archivo de datos de Odoo, que describe dos registros para ser agregados a Odoo: - El elemento <act_window> define una Acción de Ventana del lado del cliente para abrir el modelo aplicacion.task definido en el archivo Python, con las vistas de árbol y formulario habilitadas, en ese orden. - El elemento <menuitem> define un ítem de menú bajo el menú Mensajería (identificado por mail.mail_feeds), llamando a la acción action_aplicacion_task, que fue definida anteriormente. el atributo sequence nos deja fijar el orden de las opciones del menú.
 
 Ahora necesitamos decirle al módulo que use el nuevo archivo de datos XML. Esto es hecho en el archivo __manifest__.py usando el atributo data. Este define la lista de archivos que son cargados por el módulo. Agregue este atributo al diccionario del descriptor:
 
+~~~
 'data': ['views/dato.xml']
+~~~
+
+Se generará un formulario.
